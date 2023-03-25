@@ -1,4 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using NZWalks.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Para Migration: PM> Add-Migration NomeMigration -Project NLX.DA
+
+builder.Services.AddDbContext<NZWalksDbContext>(options =>
+         options.UseMySql(conn, ServerVersion.AutoDetect(conn), mysql => mysql.UseNetTopologySuite()));
+
 
 // Add services to the container.
 
